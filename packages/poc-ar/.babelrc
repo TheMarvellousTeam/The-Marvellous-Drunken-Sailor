@@ -1,0 +1,16 @@
+{
+  "presets": ["flow"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "~": "./src"
+        }
+      }
+    ],
+    "transform-class-properties",
+    "transform-es2015-modules-commonjs",
+    "transform-object-rest-spread"
+  ]
+}

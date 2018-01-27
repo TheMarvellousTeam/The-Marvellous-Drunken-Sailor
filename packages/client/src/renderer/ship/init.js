@@ -61,7 +61,7 @@ export const init = scene => {
 
   scene.add(container)
   container.name = 'ships'
-  container.position.z = -0.12
+  container.position.z = -0.1
 }
 
 const createShip = ({ id, position, orientation, blueprint }) => {

@@ -8,17 +8,18 @@ const getPointer = e => ({
 export const init = (_, { camera }) => {
   let anchorClient = null
   let anchorCamera = null
+  let startDate = null
+  let deltaSup = false
 
   const down = e => {
+    deltaSup = false
+    startDate = Date.now()
     anchorClient = getPointer(e)
     anchorCamera = camera.position.clone()
-
-    e.preventDefault()
-    e.stopPropagation()
   }
 
   const move = e => {
-    if (!anchorClient) return
+    if (!anchorClient || Date.now() < startDate + 70) return
 
     const pointer = getPointer(e)
 
@@ -27,8 +28,12 @@ export const init = (_, { camera }) => {
       y: pointer.y - anchorClient.y,
     }
 
-    camera.position.x = anchorCamera.x - delta.x * 0.02
-    camera.position.y = anchorCamera.y + delta.y * 0.02
+    deltaSup = deltaSup || Math.abs(delta.x) + Math.abs(delta.y) > 16
+
+    if (!deltaSup) return
+
+    camera.position.x = anchorCamera.x - delta.x * 0.03
+    camera.position.y = anchorCamera.y + delta.y * 0.03
 
     camera._targetLookAt = camera._targetLookAt || {}
     camera._targetLookAt.x = camera.position.x

@@ -39,21 +39,11 @@ export const init = scene => {
   })
 
   const mesh = new THREE.Mesh(geo, mat)
+  mesh.name = 'ground'
   scene.add(mesh)
 
   mesh.position.x = 0.5
   mesh.position.y = 0.5
-
-  //
-  // for (let x = -10; x < 10; x += 1)
-  //   for (let y = -10 + x % 2; y < 10; y += 2) {
-  //     const mesh = new THREE.Mesh(geo, mat)
-  //
-  //     mesh.position.x = x
-  //     mesh.position.y = y
-  //
-  //     container.add(mesh)
-  //   }
 
   // var geometry = new THREE.BoxGeometry(1, 1, 1)
   // var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })

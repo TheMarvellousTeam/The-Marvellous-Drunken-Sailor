@@ -1,5 +1,6 @@
 export * from './init'
-import { applyAnimation } from './animation/move'
+import { applyAnimation as applyMoveAnimation } from './animation/move'
+import { applyAnimation as applyFireAnimation } from './animation/fire'
 
 export const onFrame = (scene, gameState, t) => {
   const shipsContainer = scene.getObjectByName('ships')
@@ -11,10 +12,10 @@ export const onFrame = (scene, gameState, t) => {
 
     const ship = gameState.ships.find(e => e.id == name)
     if (ship.orientation.y == 0) {
-      o.rotation.y = Math.cos(t * 0.002 + roll_theta) * 0.2
+      o.rotation.y = Math.cos(t * 0.002 + roll_theta) * 0.12
       o.rotation.x = 0
     } else if (ship.orientation.x == 0) {
-      o.rotation.x = Math.cos(t * 0.002 + roll_theta) * 0.2
+      o.rotation.x = Math.cos(t * 0.002 + roll_theta) * 0.12
       o.rotation.y = 0
     }
   }
@@ -24,7 +25,10 @@ export const onFrame = (scene, gameState, t) => {
     // there is a pending animation
     switch (scene.ship_animation.action.type) {
       case 'moveShip':
-        applyAnimation(shipsContainer, scene.ship_animation)
+        applyMoveAnimation(shipsContainer, scene.ship_animation)
+
+      case 'fireShip':
+        applyFireAnimation(shipsContainer, scene.ship_animation)
     }
   } else {
     // is there a next animation to pick?

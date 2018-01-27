@@ -1,4 +1,4 @@
-export const gameState = {
+export const placeholderState = {
   myTurn: false,
 
   lobby: [],

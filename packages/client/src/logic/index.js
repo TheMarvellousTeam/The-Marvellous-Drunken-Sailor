@@ -1,8 +1,10 @@
 import fetch from '~/util/fetch'
 import { SRV_AD } from '~/util/const'
+import { placeholderState } from './placeholderState'
 
 export const create = () => {
   let state = {
+    ...placeholderState,
     lobby: [],
     actionToPull : -1,
     actionToRender: [],
@@ -88,6 +90,7 @@ export const create = () => {
     onDoAction,
     onEndTurn,
     onLoadList,
+    getState: () => state,
     onStateChanged: () => 0,
   }
 

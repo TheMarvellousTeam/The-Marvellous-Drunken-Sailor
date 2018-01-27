@@ -9,9 +9,11 @@ export const create = async () => {
 
   // application storage layer
   app.context.storage = {
-    rooms: [],
-    worlds: [],
-    this_should_be_in_a_proper_db: 'hello',
+    rooms: {
+      next_id: 0,
+    },
+    actions: {},
+    worlds: {},
   }
 
   const router = new koaRouter()

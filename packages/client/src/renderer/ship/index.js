@@ -15,7 +15,7 @@ export const onFrame = (scene, gameState, t) => {
     	o.rotation.y = Math.cos(t * 0.002 + roll_theta) * 0.2
     	o.rotation.x = 0
     } else if ( ship.orientation.x == 0 ) {
-    	o.rotation.x = Math.cos(t * 0.002 + roll_theta) * 0.2
+    	o.rotation.x = Math.cos(t * 0.002 + roll_theta) * 0.1
     	o.rotation.y = 0
     }
   }

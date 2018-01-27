@@ -3,8 +3,8 @@ import styled from 'preact-emotion'
 
 export const Lobby = ({ gameState, ...props }) => (
   <Container>
-    <Button onClick={() => props.onCreateRoom("toto")} >Create</Button>
-    { Object.keys(gameState.lobby).map(k => <Button onClick={() => props.onJoinRoom({k})}>Join {gameState.lobby[k][0]}</Button>) }
+    <Button onClick={() => props.onCreateRoom("toto")} > Create </Button>
+    { Object.keys(gameState.lobby).map(k => <Button onClick={() => props.onJoinRoom(k, "toto2")}> Join {gameState.lobby[k][0]} </Button>) }
   </Container>
 )
 

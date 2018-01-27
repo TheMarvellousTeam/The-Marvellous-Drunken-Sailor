@@ -15,8 +15,11 @@ export const create = () => {
     out.onStateChanged(state)
   }
 
-  const onJoinRoom = async roomId => {
-    const res = await fetch(`${SRV_AD}/${roomId}/join`)
+  const onJoinRoom = async (roomId, username) => {
+    const res = await fetch(`${SRV_AD}/${roomId}/join`, {
+      method: 'POST',
+      body: {uid: username}
+    })
     
     state.roomId = res.room_id
     state.myTeam = res.playerTeam

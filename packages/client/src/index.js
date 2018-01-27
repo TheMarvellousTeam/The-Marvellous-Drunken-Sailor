@@ -20,12 +20,12 @@ const ui = createUi(x)
 x.onLoadList()
 
 renderer.onStateChanged(gameState)
-renderer.onFrame()
+renderer.onFrame(gameState)
 
 // render loop
 {
   const loop = () => {
-    renderer.onFrame()
+    renderer.onFrame(gameState)
 
     requestAnimationFrame(loop)
   }

@@ -34,7 +34,7 @@ const loadModels = () => {
       }).then(obj => {
         const forTransform = new THREE.Object3D()
 
-        forTransform.scale.set(0.014, 0.014, 0.014)
+        forTransform.scale.set(0.02, 0.02, 0.02)
         forTransform.rotation.x = Math.PI / 2
         forTransform.updateMatrix()
 
@@ -94,7 +94,7 @@ const createShip = ({ id, position, orientation, blueprint }) => {
   return container
 }
 
-export const onStateChage = (scene, gameState) => {
+export const onStateChanged = (scene, gameState) => {
   const shipsContainer = scene.getObjectByName('ships')
 
   // create

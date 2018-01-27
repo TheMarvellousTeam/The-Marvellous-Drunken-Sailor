@@ -10,7 +10,9 @@ export const gameState = {
     },
   },
 
-  selectedShip: null,
+  selectedShip: 12,
+
+  selectedTool: 'moveShip',
 
   // whatever, there is no obstacles
   world: [],

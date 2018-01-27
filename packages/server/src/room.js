@@ -9,7 +9,7 @@ export const create = ctx => {
 		next_id: 0,
 	}
 	ctx.body = {
-		room_id: ctx.storage.rooms.next_id,
+		room_id: ctx.storage.nextRoomId,
 		player_team: 0,
 		world: world,
 	}

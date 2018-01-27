@@ -1,22 +1,45 @@
 import fetch from '~/util/fetch'
 
+const SRV_AD = 'http://localhost:8088/'
+
 export const create = () => {
   let state = {
-    previousActions: [],
+    actionToPull : -1,
+    actionToRender: [],
   }
 
-  const onJoinRoom = async roomId => 0
+  const onJoinRoom = async roomId => {
+    const res = await fetch(`${SRV_AD}/${roomId}/join`)
+    state.roomId = res.room_id
+    state.myTeam = res.playerTeam
+    state.myTurn = true
+    state.world = res.world
 
-  const onDoAction = async action => 0
+    out.onStateChanged(state)
+  }
 
-  const onEndTurn = async action => 0
+  const onDoAction = async action => {
+    const res = await fetch(`${SRV_AD}/${state.roomId}/actions`, {
+      method: 'POST',
+      body: {action}
+    })
+
+  }
+
+  const onEndTurn = async () => {
+    const res = await fetch(`${SRV_AD}/${state.roomId}/end_turn`)
+  }
 
   const onCreateRoom = async name => {
-    const res = await fetch('http://localhost:8088/create', {
+    const res = await fetch(`${SRV_AD}/create`, {
+      method: 'POST'
       body: { uid: name },
     })
 
-    state.roomId = res.roomId
+    state.roomId = res.room_id
+    state.myTeam = res.playerTeam
+    state.myTurn = false
+    state.world = res.world
 
     out.onStateChanged(state)
 
@@ -24,7 +47,14 @@ export const create = () => {
   }
 
   const pollingLoop = () => {
-    // fetch new actions ...
+    const res = await fetch(`${SRV_AD}/${state.roomId}/pull`)
+    // apply new action
+
+    state.myTurn = (state.myTeam == res.world.currentPlayer)
+    state.actionToRender.push( ...res.actions.filter(e => e.id > state.actionToPull ) )
+    state.actionToPull = state.actionToPull[state.actionToPull.length-1]
+
+    out.onStateChanged(state)
 
     setTimeout(pollingLoop, 2000)
   }
@@ -32,6 +62,8 @@ export const create = () => {
   const out = {
     onJoinRoom,
     onCreateRoom,
+    onDoAction,
+    onEndTurn,
     onStateChanged: () => 0,
   }
 

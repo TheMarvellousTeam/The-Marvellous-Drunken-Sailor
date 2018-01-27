@@ -1,15 +1,23 @@
 import fetch from '~/util/fetch'
-
-const SRV_AD = 'http://localhost:8088/'
+import { SRV_AD } from '~/util/const'
 
 export const create = () => {
   let state = {
+    lobby: [],
     actionToPull : -1,
     actionToRender: [],
   }
 
+  const onLoadList = async () => {
+    const res = await fetch(`${SRV_AD}/list`)
+    state.lobby = res
+
+    out.onStateChanged(state)
+  }
+
   const onJoinRoom = async roomId => {
     const res = await fetch(`${SRV_AD}/${roomId}/join`)
+    
     state.roomId = res.room_id
     state.myTeam = res.playerTeam
     state.myTurn = true
@@ -32,7 +40,7 @@ export const create = () => {
 
   const onCreateRoom = async name => {
     const res = await fetch(`${SRV_AD}/create`, {
-      method: 'POST'
+      method: 'POST',
       body: { uid: name },
     })
 
@@ -46,13 +54,14 @@ export const create = () => {
     pollingLoop()
   }
 
-  const pollingLoop = () => {
+  const pollingLoop = async () => {
     const res = await fetch(`${SRV_AD}/${state.roomId}/pull`)
-    // apply new action
+
+    //TODO apply new action
 
     state.myTurn = (state.myTeam == res.world.currentPlayer)
     state.actionToRender.push( ...res.actions.filter(e => e.id > state.actionToPull ) )
-    state.actionToPull = state.actionToPull[state.actionToPull.length-1]
+    state.actionToPull = state.actionToRender[state.actionToRender.length-1]
 
     out.onStateChanged(state)
 
@@ -65,6 +74,7 @@ export const create = () => {
     onCreateRoom,
     onDoAction,
     onEndTurn,
+    onLoadList,
     onStateChanged: () => 0,
   }
 

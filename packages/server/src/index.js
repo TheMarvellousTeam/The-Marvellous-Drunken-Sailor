@@ -9,7 +9,7 @@ export const create = async () => {
 
   // application storage layer
   app.context.storage = {
-    nextRoomId: 0,
+    nextRoomId: 1,
     rooms: {},
     actions: {},
     worlds: {},

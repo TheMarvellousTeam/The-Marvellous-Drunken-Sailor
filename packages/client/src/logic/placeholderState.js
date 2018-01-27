@@ -1,6 +1,8 @@
 export const gameState = {
   myTurn: false,
 
+  lobby: [],
+
   blueprint: {
     dreadnougth: {
       param: {

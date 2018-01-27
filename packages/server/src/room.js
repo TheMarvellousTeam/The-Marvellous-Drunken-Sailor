@@ -3,17 +3,15 @@ import * as world_manager from './world'
 export const create = ctx => {
 	const world = world_manager.createWorld()
 
-	ctx.storage.rooms[ctx.storage.rooms.next_id] = [ctx.request.body.uid]
-	ctx.storage.worlds[ctx.storage.rooms.next_id] = world
-	ctx.storage.actions[ctx.storage.rooms.next_id] = {
-		next_id: 0,
-	}
+	ctx.storage.rooms[ctx.storage.nextRoomId] = [ctx.request.body.uid]
+	ctx.storage.worlds[ctx.storage.nextRoomId] = world
+	ctx.storage.actions[ctx.storage.nextRoomId] = []
 	ctx.body = {
 		room_id: ctx.storage.nextRoomId,
 		player_team: 0,
 		world: world,
 	}
-	ctx.storage.rooms.next_id++
+	ctx.storage.nextRoomId++
 }
 
 export const join = ctx => {

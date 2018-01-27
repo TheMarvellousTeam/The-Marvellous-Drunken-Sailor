@@ -15,6 +15,7 @@ export const initRoutes = app => {
 		} 
 	})
 	app.post('/:room_id/action', koaBody(), ctx => {
+		
 		ctx.storage.actions[ctx.params.room_id].push(ctx.request.body.action)
 		// resolve action
 	})

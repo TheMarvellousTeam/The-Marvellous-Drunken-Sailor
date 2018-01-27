@@ -3,16 +3,22 @@
   "version": "1.0.0",
   "dependencies": {
     "ar.js": "1.4.10",
+    "emotion": "8.0.12",
     "jsartoolkit5": "0.0.4",
+    "preact": "8.2.7",
+    "preact-compat": "3.18.0",
+    "preact-emotion": "8.0.12",
     "three": " 0.89.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-loader": "7.1.2",
+    "babel-plugin-emotion": "8.0.12",
     "babel-plugin-module-resolver": "3.0.0",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-inline-environment-variables": "0.2.0",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-plugin-transform-react-jsx": " 6.24.1",
     "babel-plugin-transform-runtime": "6.23.0",
     "file-loader": "1.1.6",
     "webpack": "3.10.0",

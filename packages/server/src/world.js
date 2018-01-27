@@ -51,7 +51,7 @@ const createDestroyer = (x, y, yorient) => {
 	return ship
 }
 
-export const initWorld = () => {
+export const createWorld = () => {
 	let world = {
 		currentPlayer: 0,
 		ships: [[], []],

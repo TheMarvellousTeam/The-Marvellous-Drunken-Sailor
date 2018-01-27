@@ -23,9 +23,10 @@ export const create = () => {
       x.render()
     },
 
-    onStateChage: gameState =>
+    onStateChanged: gameState =>
       handler.forEach(
-        ({ onStateChage }) => onStateChage && onStateChage(x.scene, gameState)
+        ({ onStateChanged }) =>
+          onStateChanged && onStateChanged(x.scene, gameState)
       ),
 
     applyAction: (gameState, action) =>

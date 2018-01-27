@@ -10,6 +10,6 @@ export const onFrame = (scene, _, t) => {
 
     const [o] = children
 
-    o.rotation.y = Math.sin(t * 0.003 + roll_theta) * 0.28
+    o.rotation.y = Math.cos(t * 0.003 + roll_theta) * 0.26
   }
 }

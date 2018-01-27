@@ -30,6 +30,7 @@ export const create = () => {
   }
 
   const out = {
+    onSelectTool: toolName => 0,
     onJoinRoom,
     onCreateRoom,
     onStateChanged: () => 0,

@@ -1,13 +1,19 @@
 import { create as createScene } from './scene'
 
-const handler = [require('./grid'), require('./ship'), require('./light')]
+const handler = [
+  require('./grid'),
+  require('./ship'),
+  require('./light'),
+  require('./helper'),
+  require('./camera'),
+]
 
 export const create = () => {
   const x = createScene()
 
   x.attach()
 
-  handler.forEach(({ init }) => init && init(x.scene))
+  handler.forEach(({ init }) => init && init(x.scene, x))
 
   let date = Date.now()
 
@@ -17,7 +23,7 @@ export const create = () => {
       date = Date.now()
 
       handler.forEach(
-        ({ onFrame }) => onFrame && onFrame(x.scene, gameState, date, delta)
+        ({ onFrame }) => onFrame && onFrame(x.scene, gameState, date, delta, x)
       )
 
       x.render()

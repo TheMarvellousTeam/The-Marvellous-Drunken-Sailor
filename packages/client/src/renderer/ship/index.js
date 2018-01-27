@@ -12,10 +12,10 @@ export const onFrame = (scene, gameState, t) => {
 
     const ship = gameState.ships.find(e => e.id == name)
     if ( ship.orientation.y == 0 ) {
-    	o.rotation.y = Math.cos(t * 0.003 + roll_theta) * 0.26
+    	o.rotation.y = Math.cos(t * 0.002 + roll_theta) * 0.2
     	o.rotation.x = 0
     } else if ( ship.orientation.x == 0 ) {
-    	o.rotation.x = Math.cos(t * 0.003 + roll_theta) * 0.26
+    	o.rotation.x = Math.cos(t * 0.002 + roll_theta) * 0.2
     	o.rotation.y = 0
     }
   }

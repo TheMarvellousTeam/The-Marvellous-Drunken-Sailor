@@ -1,0 +1,28 @@
+{
+  "name": "the-marvelous-pirate-warship",
+  "version": "0.1.0",
+  "engines": {
+    "node": "8.9"
+  },
+  "private": true,
+  "dependencies": {
+    "koa": "2.4.1",
+    "koa-bodyparser": "4.2.0",
+    "koa-cors": "0.0.16",
+    "koa-router": "7.3.0",
+    "koa2-cors-error": "1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "babel-register": "6.26.0",
+    "nodemon": " 1.14.11"
+  },
+  "scripts": {
+    "start": "node -e \"require('./lib').create()\"",
+    "start:dev": "nodemon start.js",
+    "build": "rm -rf lib && NODE_ENV=production babel --out-dir ./lib --ignore __tests__ ./src"
+  }
+}

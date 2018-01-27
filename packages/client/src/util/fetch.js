@@ -15,15 +15,10 @@ export default (url, { query = {}, method = 'GET', body } = {}) =>
     headers: {
       'content-type': (body && 'application/json') || null,
     },
+  }).then(async res => {
+    const text = await res.text()
+
+    if (!res.ok) throw Error(`${res.status} - ${text}`)
+
+    return safeJSONparse(text) || text
   })
-    .then(async res => {
-      const text = await res.text()
-
-      if (!res.ok) throw Error(`${res.status} - ${text}`)
-
-      return safeJSONparse(text) || text
-    })
-    .catch(err => {
-      error(err)
-      throw err
-    })

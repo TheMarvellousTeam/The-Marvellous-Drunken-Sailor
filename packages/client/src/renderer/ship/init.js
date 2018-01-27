@@ -61,13 +61,13 @@ export const init = scene => {
 
   scene.add(container)
   container.name = 'ships'
-  container.position.z = 0.1
+  container.position.z = -0.12
 }
 
 const createShip = ({ id, position, orientation, blueprint }) => {
   const container = new THREE.Object3D()
   container.name = id
-  container.position.set(position.x, position.y, 0.25)
+  container.position.set(position.x, position.y, 0)
   container.rotation.z = toAngle(orientation)
   container.roll_theta = Math.random() * Math.PI
 

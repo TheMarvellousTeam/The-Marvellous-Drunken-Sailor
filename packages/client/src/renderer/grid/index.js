@@ -10,7 +10,11 @@ export const init = scene => {
   const canvas = document.createElement('canvas')
   canvas.width = canvas.height = 2
   const ctx = canvas.getContext('2d')
-  ctx.fillStyle = 'rgba(0,0,0,0.3)'
+  ctx.fillStyle = 'aliceblue'
+  ctx.beginPath()
+  ctx.rect(0, 0, 2, 2)
+  ctx.fill()
+  ctx.fillStyle = 'rgba(0,0,0,0.2)'
   ctx.beginPath()
   ctx.rect(0, 0, 1, 1)
   ctx.fill()
@@ -18,7 +22,7 @@ export const init = scene => {
   ctx.rect(1, 1, 1, 1)
   ctx.fill()
 
-  const L = 200
+  const L = 500
 
   const texture = new THREE.Texture(canvas)
   texture.needsUpdate = true

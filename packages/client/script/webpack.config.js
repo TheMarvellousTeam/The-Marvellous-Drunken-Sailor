@@ -15,23 +15,14 @@ module.exports = {
     publicPath: '/',
   },
 
-  resolve: {
-    alias: {
-      jsartoolkit5: path.join(
-        __dirname,
-        '../node_modules/jsartoolkit5/build/artoolkit.debug'
-      ),
-    },
-  },
-
   module: {
     rules: [
       {
         test: /\.js$/,
         use: [
-          // {
-          //   loader: 'babel-loader',
-          // },
+          {
+            loader: 'babel-loader',
+          },
         ],
       },
 
@@ -64,11 +55,7 @@ module.exports = {
   devtool: 'source-map',
 
   devServer: {
-    contentBase: [
-      path.resolve(__dirname, '../vendors'),
-      // path.resolve(__dirname, '../node_modules/jsartoolkit5/build'),
-      // path.resolve(__dirname, '../node_modules/jsartoolkit5/js'),
-    ],
+    contentBase: [path.resolve(__dirname, '../src/asset')],
     historyApiFallback: true,
     watchOptions: {
       ignored: /node_modules/,

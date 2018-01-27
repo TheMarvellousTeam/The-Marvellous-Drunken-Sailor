@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+window.THREE = THREE
+
 export const create = (config = {}) => {
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 3000)
   camera.position.set(0, 0, 12)
@@ -13,7 +15,6 @@ export const create = (config = {}) => {
   renderer.setPixelRatio(window.devicePixelRatio)
 
   window.scene = scene
-  window.THREE = THREE
 
   const setSize = (width, height) => {
     camera.aspect = width / height

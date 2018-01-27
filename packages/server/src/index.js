@@ -8,7 +8,9 @@ export const create = async () => {
   const app = new koa()
 
   // application storage layer
-  app.ctx.storages = {
+  app.context.storage = {
+    rooms: [],
+    worlds: [],
     this_should_be_in_a_proper_db: 'hello',
   }
 

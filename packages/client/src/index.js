@@ -1,17 +1,23 @@
 import { create } from './renderer'
-import { gameState } from './logic'
+import { create as createLogic } from './logic'
 
-const renderer = create()
+const x = createLogic()
 
-renderer.onStateChage(gameState)
-renderer.onFrame()
+x.onStateChanged = state => console.log('state has changed!', state)
 
-// render loop
-{
-  const loop = () => {
-    renderer.onFrame()
+window.onClick = () => x.onCreateRoom('room_1234')
 
-    requestAnimationFrame(loop)
-  }
-  loop()
-}
+// const renderer = create()
+//
+// renderer.onStateChage(gameState)
+// renderer.onFrame()
+//
+// // render loop
+// {
+//   const loop = () => {
+//     renderer.onFrame()
+//
+//     requestAnimationFrame(loop)
+//   }
+//   loop()
+// }

@@ -5,15 +5,18 @@ const handler = [
   require('./ship'),
   require('./light'),
   require('./helper'),
+
+  //should be before camera to preventDefault
+  require('./reactive'),
   require('./camera'),
 ]
 
-export const create = () => {
+export const create = actions => {
   const x = createScene()
 
   x.attach()
 
-  handler.forEach(({ init }) => init && init(x.scene, x))
+  handler.forEach(({ init }) => init && init(x.scene, x, actions))
 
   let date = Date.now()
 

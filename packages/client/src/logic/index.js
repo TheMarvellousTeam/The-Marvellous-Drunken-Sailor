@@ -20,7 +20,7 @@ export const create = () => {
       method: 'POST',
       body: {uid: username}
     })
-    
+
     state.roomId = res.room_id
     state.myTeam = res.playerTeam
     state.myTurn = true
@@ -72,7 +72,17 @@ export const create = () => {
   }
 
   const out = {
-    onSelectTool: toolName => 0,
+    onSelectShip: shipId => {
+      state.selectedShip = shipId
+      state.selectedTool = shipId && state.selectedTool
+
+      out.onStateChanged(state)
+    },
+    onSelectTool: toolName => {
+      state.selectedTool = toolName
+
+      out.onStateChanged(state)
+    },
     onJoinRoom,
     onCreateRoom,
     onDoAction,

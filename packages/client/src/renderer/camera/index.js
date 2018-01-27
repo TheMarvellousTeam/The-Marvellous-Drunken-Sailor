@@ -65,7 +65,7 @@ export const onFrame = (_1, _2, _3, _4, { camera }) => {
   const vy = camera._targetLookAt.y - camera._lookingAt.y
   const d = dist(vx, vy)
 
-  let c = d * 0.03
+  let c = d * 0.1
 
   if (d < 0.02) {
     c = d

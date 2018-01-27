@@ -28,7 +28,7 @@ export const onStateChanged = (scene, gameState) => {
 
   const container = scene.getObjectByName('helper')
 
-  while (container.children.length) container.removeChild(container.children[0])
+  while (container.children.length) container.remove(container.children[0])
 
   let toEnhance = []
 

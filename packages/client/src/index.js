@@ -1,31 +1,33 @@
 import { create as createRenderer } from './renderer'
 import { create as createLogic } from './logic'
 import { create as createUi } from './ui'
-import { gameState } from './logic/placeholderState'
 import fetch from '~/util/fetch'
 import { SRV_AD } from '~/util/const'
 
 const x = createLogic()
 
 x.onStateChanged = state => {
-	console.log('state has changed!', state)
-	document.getElementById("lobby").style.display = state.roomId ? "none" : "block"
-	ui.onStateChanged(state)
-	//renderer.onStateChanged(state)
+  console.log('state has changed!', state)
+
+  document.getElementById('lobby').style.display =
+    state.roomId || true ? 'none' : 'block'
+
+  ui.onStateChanged(state)
+  renderer.onStateChanged(state)
 }
 
 const renderer = createRenderer(x)
 const ui = createUi(x)
 
-x.onLoadList()
+ui.onStateChanged(x.getState())
+renderer.onStateChanged(x.getState())
 
-renderer.onStateChanged(gameState)
-renderer.onFrame(gameState)
+x.onLoadList()
 
 // render loop
 {
   const loop = () => {
-    renderer.onFrame(gameState)
+    renderer.onFrame(x.getState())
 
     requestAnimationFrame(loop)
   }

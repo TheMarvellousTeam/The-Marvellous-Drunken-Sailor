@@ -1,4 +1,3 @@
-import * as room_manager from './room'
 import koaBody from 'koa-bodyparser'
 import { createWord, prepareShips } from './world'
 

@@ -27,9 +27,11 @@ export const create = async () => {
   app.use(router.allowedMethods())
   app.on('error', error => console.log(error))
 
-  const server = app.listen(8088)
+  const port = process.env.PORT || 8088
 
-  console.log('listen to http://localhost:8088')
+  const server = app.listen(port)
+
+  console.log(`listen to http://localhost:${port}`)
 
   // kill server
   return () => server.close()

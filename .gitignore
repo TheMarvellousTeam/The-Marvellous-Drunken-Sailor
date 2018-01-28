@@ -4,3 +4,5 @@ yarn-error.log*
 Thumbs.db
 .tmp
 api-build
+lib
+dist

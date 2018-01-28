@@ -1,0 +1,32 @@
+
+box: node:8
+
+build:
+  steps:
+    - script:
+      name: install dependencies
+      cwd: packages/client
+      code: |
+        npm install -g yarn
+        export YARN_CACHE=$WERCKER_CACHE_DIR/yarn
+        HOME=$YARN_CACHE yarn --pure-lockfile
+
+    - script:
+      name: build
+      cwd: packages/client
+      code: yarn build
+
+    - script:
+      name: prepare
+      cwd: packages/client
+      code: |
+        mv dist gh-pages
+        mv vendor gh-pages
+        mv src/asset gh-pages
+
+
+deploy-pages:
+  steps:
+    - takuma7/gh-pages:
+        token: $GH_TOKEN
+        basedir: gh-pages

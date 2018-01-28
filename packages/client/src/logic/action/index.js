@@ -26,7 +26,7 @@ export const applyAction = (state, action) => {
 
       ship.position = action.path[action.path.length - 1]
 
-      ship.pm -= action.path.length - 1
+      ship.pa -= action.path.length - 1
 
       // reset ui
       state.selectedTool = null

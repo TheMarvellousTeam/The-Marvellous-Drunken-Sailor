@@ -3,9 +3,14 @@ import * as THREE from 'three'
 import { getPossibleMove, getPossibleFireTarget } from '~/logic/game'
 
 const geo = new THREE.PlaneBufferGeometry(0.8, 0.8)
-const mat = new THREE.MeshBasicMaterial({
+const matFire = new THREE.MeshBasicMaterial({
   transparent: true,
   color: 0xf41f2f,
+  opacity: 0.6,
+})
+const matMove = new THREE.MeshBasicMaterial({
+  transparent: true,
+  color: 0x449624,
   opacity: 0.6,
 })
 
@@ -31,6 +36,7 @@ export const onStateChanged = (scene, gameState) => {
   while (container.children.length) container.remove(container.children[0])
 
   let toEnhance = []
+  let mat = tool === 'moveShip' ? matMove : matFire 
 
   if (shipId && tool === 'moveShip')
     toEnhance = getPossibleFireTarget(gameState, shipId)

@@ -1,6 +1,5 @@
-import * as room_manager from './room'
 import koaBody from 'koa-bodyparser'
-import { createWord, prepareShips } from './world'
+import { createWorld, prepareShips } from './world'
 
 export const initRoutes = app => {
   app.get('/health', ctx => (ctx.body = 'ok'))
@@ -16,7 +15,7 @@ export const initRoutes = app => {
       ctx.params.roomId
     ] || {
       players: [],
-      ...createWord(),
+      ...createWorld(),
       started: false,
       actions: [],
       state0_ships: [],
@@ -49,18 +48,5 @@ export const initRoutes = app => {
 
     ctx.body = 'ok'
   })
-  //
-  // app.post('/room/:roomId/endTurn', koaBody(), ctx => {
-  //   const room = ctx.storage.room[ctx.params.roomId]
-  //
-  //   if (!room) return ctx.throw(404, 'room not found')
-  //
-  //   const playerIndex = room.players.findIndex(
-  //     x => x.id == room.currentPlayerId
-  //   )
-  //
-  //   room.currentPlayerId = room.players[(playerIndex + 1) % room.players.length]
-  //
-  //   ctx.body = 'ok'
-  // })
+
 }

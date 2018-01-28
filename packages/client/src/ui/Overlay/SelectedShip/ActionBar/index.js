@@ -1,6 +1,7 @@
 import { h } from 'preact'
 import styled from 'preact-emotion'
 import { canMove, canFire } from '~/logic/game'
+import { SHIP_SPEC } from '~/util/const'
 
 export const ActionBar = ({ onSelectTool, state }) => (
   <Container>
@@ -8,7 +9,7 @@ export const ActionBar = ({ onSelectTool, state }) => (
       <Button onClick={() => onSelectTool('moveShip')}>move ship</Button>
     )}
     {canFire(state, state.selectedShip) && (
-      <Button onClick={() => onSelectTool('fireShip')}>fire ship</Button>
+      <Button onClick={() => onSelectTool('fireShip')}>fire ship ({SHIP_SPEC[state.ships.find(s => s.id == state.selectedShip).blueprint].fire_cost} pa)</Button>
     )}
   </Container>
 )

@@ -14,8 +14,8 @@ export const SelectedShip = ({
   return (
     <Container>
       <div>
-        <span>{ship.blueprint}</span>
-        <span>{`${ship.pa}pa ${ship.pm}pm`}</span>
+        <span>{ship.blueprint} </span>
+        <span>{`${ship.pa}pa `}</span>
         <span>{`${ship.health}pv`}</span>
       </div>
 

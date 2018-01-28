@@ -1,11 +1,12 @@
 import { SHIP_SPEC } from '~/util/const'
 
-export const getPossibleMove_ = (state, shipId) => {
+export const getPossibleMove = (state, shipId) => {
   // TODO add islands
   // TODO add enemy ships
   const bloked = [...state.ships.map(s => s.position)]
-  const start = state.ships.filter(s => s.id == shipId)[0].position
-  const maxDepth = state.paAvailable[shipId]
+  const ship = state.ships.find(x => x.id === shipId)
+  const start = ship.position
+  const maxDepth = ship.pa
 
   const moves = [
     { vx: 1, vy: 0 },
@@ -52,47 +53,16 @@ export const getPossibleMove_ = (state, shipId) => {
   return possibilities
 }
 
-export const getPossibleMove = (state, shipId) => {
-  const ship = state.ships.find(x => x.id === shipId)
-
-  return [
-    {
-      target: { x: ship.position.x, y: ship.position.y + 2 },
-      path: [
-        { x: ship.position.x, y: ship.position.y },
-        { x: ship.position.x, y: ship.position.y + 1 },
-        { x: ship.position.x, y: ship.position.y + 2 },
-      ],
-    },
-    {
-      target: { x: ship.position.x, y: ship.position.y + 3 },
-      path: [
-        { x: ship.position.x, y: ship.position.y },
-        { x: ship.position.x, y: ship.position.y + 1 },
-        { x: ship.position.x, y: ship.position.y + 2 },
-        { x: ship.position.x, y: ship.position.y + 3 },
-      ],
-    },
-    {
-      target: { x: ship.position.x, y: ship.position.y + 1 },
-      path: [
-        { x: ship.position.x, y: ship.position.y },
-        { x: ship.position.x, y: ship.position.y + 1 },
-      ],
-    },
-  ]
-}
-
 export const canFire = (state, shipId) => {
   const ship = state.ships.find(x => x.id === shipId)
 
-  return ship.pa > 0
+  return ship.pa >= SHIP_SPEC[ship.blueprint].fire_cost
 }
 
 export const canMove = (state, shipId) => {
   const ship = state.ships.find(x => x.id === shipId)
 
-  return ship.pm > 0
+  return ship.pa > 0
 }
 
 export const getPossibleFireTarget = (state, shipId) =>

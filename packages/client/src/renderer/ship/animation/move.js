@@ -1,6 +1,6 @@
 import { toAngle } from '~/util/orientation'
 
-const CHIP_VELOCITY = 0.02
+const CHIP_VELOCITY = 0.027
 
 const lerpPoint = (a, b, k) =>
   (k <= 0 && a) ||

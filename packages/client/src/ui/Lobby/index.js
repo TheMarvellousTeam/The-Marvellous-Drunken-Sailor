@@ -1,23 +1,28 @@
 import { h } from 'preact'
 import styled from 'preact-emotion'
 
-export const Lobby = ({ gameState, ...props }) => (
+const randomRoomName = () =>
+  Math.random()
+    .toString(16)
+    .slice(2, 6)
+
+export const Lobby = ({ roomId, started, connecting }) => (
   <Container>
-    <Button onClick={() => props.onCreateRoom("toto")} > Create </Button>
-    { Object.keys(gameState.lobby)
-                .filter(k => gameState.lobby[k].length == 1)
-                .map(k => <Button onClick={() => props.onJoinRoom(k, "toto2")}> Join {gameState.lobby[k][0]} </Button>) }
+    {connecting && <span>{`connecting to ${roomId}`}</span>}
+
+    {!connecting &&
+      roomId && <span>{`waiting for another player in ${roomId}`}</span>}
+
+    {!roomId && <a href={`?roomId=${randomRoomName()}`}>create room</a>}
   </Container>
 )
 
 const Container = styled.div`
   position: fixed;
+  padding: 10px;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
   background-color: #ffffff;
-`
-const Button = styled.button`
-  padding: 10px;
 `

@@ -14,7 +14,7 @@ const createShip = ({ id, position, orientation, blueprint }) => {
   const container = new THREE.Object3D()
   container.name = id
   container.position.set(position.x, position.y, 0)
-  container.rotation.z = toAngle(orientation)
+  container.rotation.z = toAngle(orientation || { x: 0, y: 0 })
   container.roll_theta = Math.random() * Math.PI
 
   const mesh = models['ship_destroyer']
@@ -31,7 +31,7 @@ const createShip = ({ id, position, orientation, blueprint }) => {
       container.remove(container.children[0])
       container.add(mesh)
     })
-  } else container.add(mesh)
+  } else container.add(mesh.clone())
 
   // var geometry = new THREE.BoxGeometry(0.5, 0.9, 0.5)
   // var material = new THREE.MeshPhongMaterial({ color: 0xf8f8f8 })

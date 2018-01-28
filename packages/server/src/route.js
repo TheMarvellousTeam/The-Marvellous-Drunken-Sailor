@@ -1,25 +1,66 @@
 import * as room_manager from './room'
 import koaBody from 'koa-bodyparser'
+import { createWord, prepareShips } from './world'
 
 export const initRoutes = app => {
-	app.get('/health', ctx => (ctx.body = 'ok'))
+  app.get('/health', ctx => (ctx.body = 'ok'))
 
-	app.get('/list', ctx => ( ctx.body = ctx.storage.rooms ))
-	app.post('/create', koaBody(), ctx => ( room_manager.create(ctx) ))
-	app.post('/:room_id/join', koaBody(), ctx => ( room_manager.join(ctx) ))
-	app.get('/:room_id/pull', ctx => { 
-		const roomId = ctx.params.room_id
-		ctx.body = {
-			actions: ctx.storage.actions[roomId],
-			world: ctx.storage.worlds[roomId]
-		} 
-	})
-	app.post('/:room_id/action', koaBody(), ctx => {
-		
-		ctx.storage.actions[ctx.params.room_id].push(ctx.request.body.action)
-		// resolve action
-	})
-	app.get('/:room_id/end_turn', ctx => 
-		( ctx.storage.worlds[ctx.params.room_id].current_player = !ctx.storage.worlds[ctx.params.room_id].current_player ))
+  // get room info
+  app.get('/room/:roomId', ctx => {
+    ctx.body = ctx.storage.room[ctx.params.roomId]
+  })
 
+  // join / create room
+  app.post('/room/:roomId/player', koaBody(), ctx => {
+    const room = (ctx.storage.room[ctx.params.roomId] = ctx.storage.room[
+      ctx.params.roomId
+    ] || {
+      players: [],
+      ...createWord(),
+      started: false,
+      actions: [],
+      state0_ships: [],
+      state0_currentPlayerId: null,
+    })
+
+    // can not join a started room
+    if (room.started) return ctx.throw(403, 'game started already')
+
+    // add player
+    room.players.push(ctx.request.body.player)
+
+    // if there is two players, start the game
+    if (room.players.length >= 2) {
+      room.started = true
+      room.state0_ships = prepareShips(room.players, room.map)
+      room.state0_currentPlayerId =
+        room.players[Math.floor(Math.random() * room.players.length)].id
+    }
+
+    ctx.body = 'ok'
+  })
+
+  app.post('/room/:roomId/action', koaBody(), ctx => {
+    const room = ctx.storage.room[ctx.params.roomId]
+
+    if (!room) return ctx.throw(404, 'room not found')
+
+    room.actions.push(...ctx.request.body.actions)
+
+    ctx.body = 'ok'
+  })
+  //
+  // app.post('/room/:roomId/endTurn', koaBody(), ctx => {
+  //   const room = ctx.storage.room[ctx.params.roomId]
+  //
+  //   if (!room) return ctx.throw(404, 'room not found')
+  //
+  //   const playerIndex = room.players.findIndex(
+  //     x => x.id == room.currentPlayerId
+  //   )
+  //
+  //   room.currentPlayerId = room.players[(playerIndex + 1) % room.players.length]
+  //
+  //   ctx.body = 'ok'
+  // })
 }

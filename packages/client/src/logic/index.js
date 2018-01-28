@@ -1,103 +1,106 @@
 import fetch from '~/util/fetch'
 import { SRV_AD, SHIP_SPEC } from '~/util/const'
-import { placeholderState } from './placeholderState'
+import * as mutations from './mutation'
+import { applyAction } from './action'
+
+const defaultState = {
+  roomId: null,
+
+  currentPlayerId: null,
+  me: {},
+
+  players: [],
+  ships: [],
+  actions: [],
+  map: null,
+
+  selectedShip: null,
+
+  // moveShip | fireShip
+  selectedTool: null,
+}
 
 export const create = () => {
-  let state = {
-    ...placeholderState,
-    lobby: [],
+  const state = { ...defaultState }
+
+  // read roomId
+  const m = location.search.match(/roomId=([\w-]+)/)
+  state.roomId = m ? m[1] : null
+
+  // generate player identity
+  state.me = {
+    id: Math.random()
+      .toString(16)
+      .slice(2),
+    name: Math.random()
+      .toString(16)
+      .slice(2),
   }
 
-  const onLoadList = async () => {
-    const res = await fetch(`${SRV_AD}/list`)
-    state.lobby = res
+  const listenRoom = async () => {
+    state.connecting = true
 
-    out.onStateChanged(state)
-  }
-
-  const onJoinRoom = async (roomId, username) => {
-    const res = await fetch(`${SRV_AD}/${roomId}/join`, {
+    // try to join
+    // may fail, in that case, fallback to spectactor
+    await fetch(`${SRV_AD}/room/${state.roomId}/player`, {
       method: 'POST',
-      body: {uid: username}
+      body: { player: state.me },
     })
+      // silent error
+      .catch(err => console.log(err))
 
-    state.roomId = res.room_id
-    state.myTeam = res.player_team
-    state.myTurn = true
-    state.ships = res.world.ships[state.myTeam]
-    state.enemyShips = res.world.ships[state.myTeam ? 0 : 1]
-    state.island = res.world.island
-    state.availablePa = {}
-    state.ships.forEach(ship => state.availablePa[ship.id] = SHIP_SPEC[ship.blueprint].pa )
+    // polling update loop
+    const loop = async () => {
+      const res = await fetch(`${SRV_AD}/room/${state.roomId}`)
 
-    out.onStateChanged(state)
+      // init
+      if (state.actions.length == 0) {
+        state.ships = res.state0_ships
+        state.currentPlayerId = res.state0_currentPlayerId
+      }
+
+      state.connecting = false
+      state.players = res.players
+      state.started = res.started
+
+      // apply actions
+      const lastActionId = state.actions.length
+        ? state.actions[state.actions.length - 1].id
+        : -Infinity
+
+      const newActions = res.actions.filter(x => x.id > lastActionId)
+
+      newActions.forEach(a => {
+        applyAction(state, a)
+
+        state.actions.push(a)
+      })
+
+      out.onStateChanged(state)
+
+      setTimeout(loop, 2000)
+    }
+
+    loop()
   }
 
-  const onDoAction = async action => {
-    const res = await fetch(`${SRV_AD}/${state.roomId}/actions`, {
-      method: 'POST',
-      body: {action}
-    })
-  }
-
-  const onEndTurn = async () => {
-    const res = await fetch(`${SRV_AD}/${state.roomId}/end_turn`)
-    state.ships.forEach(ship => state.availablePa[ship.id] = SHIP_SPEC[ship.blueprint].pa )
-  }
-
-  const onCreateRoom = async name => {
-    const res = await fetch(`${SRV_AD}/create`, {
-      method: 'POST',
-      body: { uid: name },
-    })
-
-    state.roomId = res.room_id
-    state.myTeam = res.player_team
-    state.myTurn = false
-    state.ships = res.world.ships[state.myTeam]
-    state.enemyShips = res.world.ships[state.myTeam ? 0 : 1]
-    state.island = res.world.island
-    state.availablePa = {}
-    state.ships.forEach(ship => state.availablePa[ship.id] = SHIP_SPEC[ship.blueprint].pa )
-
-    out.onStateChanged(state)
-
-    pollingLoop()
-  }
-
-  const pollingLoop = async () => {
-    const res = await fetch(`${SRV_AD}/${state.roomId}/pull`)
-
-    //TODO apply new action
-
-    state.myTurn = (state.myTeam == res.world.currentPlayer)
-    state.actions = res.actions
-
-    out.onStateChanged(state)
-
-    setTimeout(pollingLoop, 2000)
-  }
+  if (state.roomId) listenRoom()
 
   const out = {
-    onSelectShip: shipId => {
-      state.selectedShip = shipId
-      state.selectedTool = shipId && state.selectedTool
-
-      out.onStateChanged(state)
-    },
-    onSelectTool: toolName => {
-      state.selectedTool = toolName
-
-      out.onStateChanged(state)
-    },
-    onJoinRoom,
-    onCreateRoom,
-    onDoAction,
-    onEndTurn,
-    onLoadList,
     getState: () => state,
     onStateChanged: () => 0,
   }
+
+  // add mutations
+
+  Object.keys(mutations).forEach(
+    key =>
+      (out[key] = async (...args) => {
+        await mutations[key](out.onStateChanged, state, ...args)
+
+        out.onStateChanged(state)
+      })
+  )
 
   return out
 }

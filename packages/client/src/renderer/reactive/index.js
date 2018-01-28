@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { getPossibleMove, getPossibleFireTarget } from '~/logic/game'
 
 const getPointer = e => ({
   x: (e.touches ? e.touches[0] : e).clientX,
@@ -12,7 +13,11 @@ const getShipId = o =>
     ? null
     : (o.parent.name === 'ships' && o.name) || getShipId(o.parent)
 
-export const init = (scene, { camera }, { onSelectShip }) => {
+export const init = (
+  scene,
+  { camera },
+  { onSelectShip, moveShip, fireShip }
+) => {
   let anchorClient = null
   let startDate = null
 
@@ -53,11 +58,32 @@ export const init = (scene, { camera }, { onSelectShip }) => {
     cell.x = Math.floor(origin.x - direction.x * d + 0.5)
     cell.y = Math.floor(origin.y - direction.y * d + 0.5)
 
-    const ship = gameState.ships.find(
-      s => s.position.x == cell.x && s.position.y == cell.y
-    )
+    // decide what action to trigger
+    {
+      // moveShip
+      if (gameState.selectedTool == 'moveShip') {
+        const x = getPossibleMove(gameState, gameState.selectedShip).find(
+          u => u.target.x === cell.x && u.target.y === cell.y
+        )
 
-    onSelectShip((ship && ship.id) || null)
+        if (x) return moveShip(gameState.selectedShip, x.path)
+      }
+
+      // fireShip
+      if (gameState.selectedTool == 'fireShip') {
+        const x = getPossibleFireTarget(gameState, gameState.selectedShip).some(
+          u => u.x === cell.x && u.y === cell.y
+        )
+
+        if (x) return fireShip(gameState.selectedShip, cell)
+      }
+
+      // default, select ship
+      const ship = gameState.ships.find(
+        s => s.position.x == cell.x && s.position.y == cell.y
+      )
+      onSelectShip((ship && ship.id) || null)
+    }
   }
 
   const main = document.getElementById('mainScene')

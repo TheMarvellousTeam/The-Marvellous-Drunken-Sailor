@@ -14,34 +14,29 @@ const handler = [
 export const create = actions => {
   const x = createScene()
 
-  x.attach()
-
   handler.forEach(({ init }) => init && init(x.scene, x, actions))
 
   let date = Date.now()
 
   return {
-    onFrame: gameState => {
+    onFrame: state => {
       const delta = Date.now() - date
       date = Date.now()
 
       handler.forEach(
-        ({ onFrame }) => onFrame && onFrame(x.scene, gameState, date, delta, x)
+        ({ onFrame }) => onFrame && onFrame(x.scene, state, date, delta, x)
       )
 
       x.render()
     },
 
-    onStateChanged: gameState =>
-      handler.forEach(
-        ({ onStateChanged }) =>
-          onStateChanged && onStateChanged(x.scene, gameState)
-      ),
+    onStateChanged: state => {
+      if (x.attached() && !state.started) x.detech()
+      if (!x.attached() && state.started) x.attach()
 
-    applyAction: (gameState, action) =>
       handler.forEach(
-        ({ applyAction }) =>
-          applyAction && applyAction(x.scene, gameState, action)
-      ),
+        ({ onStateChanged }) => onStateChanged && onStateChanged(x.scene, state)
+      )
+    },
   }
 }

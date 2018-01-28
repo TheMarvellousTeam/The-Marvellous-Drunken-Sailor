@@ -12,17 +12,16 @@ export const create = actions => {
   const lobbyDOM = document.getElementById('lobby')
 
   return {
-    onStateChanged: gameState => {
+    onStateChanged: state => {
+      lobbyDOM.style.display = state.started ? 'none' : 'block'
+      overlayDOM.style.display = !state.started ? 'none' : 'block'
+
       render(
-        <Overlay {...actions} gameState={gameState} />,
+        <Overlay {...actions} {...state} state={state} />,
         overlayDOM,
         overlayDOM.children[0]
       )
-      render(
-        <Lobby {...actions} gameState={gameState} />,
-        lobbyDOM,
-        lobbyDOM.children[0]
-      )
-  }
+      render(<Lobby {...actions} {...state} />, lobbyDOM, lobbyDOM.children[0])
+    },
   }
 }

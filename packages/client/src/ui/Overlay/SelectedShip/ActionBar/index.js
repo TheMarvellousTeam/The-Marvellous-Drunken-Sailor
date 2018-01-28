@@ -1,10 +1,15 @@
 import { h } from 'preact'
 import styled from 'preact-emotion'
+import { canMove, canFire } from '~/logic/game'
 
-export const ActionBar = ({ onSelectTool }) => (
+export const ActionBar = ({ onSelectTool, state }) => (
   <Container>
-    <Button onClick={() => onSelectTool('moveShip')}>move ship</Button>
-    <Button onClick={() => onSelectTool('fireShip')}>fire ship</Button>
+    {canMove(state, state.selectedShip) && (
+      <Button onClick={() => onSelectTool('moveShip')}>move ship</Button>
+    )}
+    {canFire(state, state.selectedShip) && (
+      <Button onClick={() => onSelectTool('fireShip')}>fire ship</Button>
+    )}
   </Container>
 )
 

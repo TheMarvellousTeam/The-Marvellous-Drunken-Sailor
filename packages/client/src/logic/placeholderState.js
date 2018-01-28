@@ -1,6 +1,11 @@
 export const placeholderState = {
   myTurn: false,
 
+  players: [
+    { id: 1, name: 'nelson', color: 'red' },
+    { id: 2, name: 'ackbar', color: 'blue' },
+  ],
+
   lobby: [],
 
   paAvailable: {

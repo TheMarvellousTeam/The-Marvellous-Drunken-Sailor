@@ -11,14 +11,16 @@ export const onFrame = (scene, gameState, t) => {
 
     const [o] = children
 
-    const ship = gameState.ships.find(e => e.id == name)
-    if (ship.orientation.y == 0) {
-      o.rotation.y = Math.cos(t * 0.002 + roll_theta) * 0.12
-      o.rotation.x = 0
-    } else if (ship.orientation.x == 0) {
-      o.rotation.x = Math.cos(t * 0.002 + roll_theta) * 0.12
-      o.rotation.y = 0
-    }
+    o.rotation.y = Math.cos(t * 0.002 + roll_theta) * 0.12
+
+    // const ship = gameState.ships.find(e => e.id == name)
+    // if (ship.orientation.y == 0) {
+    //   o.rotation.y = Math.cos(t * 0.002 + roll_theta) * 0.12
+    //   o.rotation.x = 0
+    // } else if (ship.orientation.x == 0) {
+    //   o.rotation.x = Math.cos(t * 0.002 + roll_theta) * 0.12
+    //   o.rotation.y = 0
+    // }
   }
 
   // animation
@@ -33,8 +35,8 @@ export const onFrame = (scene, gameState, t) => {
         applyFireAnimation(shipsContainer, scene.ship_animation)
         break
 
-      case 'splash':
-        applySplashAnimation(shipsContainer, scene.ship_animation)
+      default:
+        scene.ship_animation.done = true
         break
     }
   } else {

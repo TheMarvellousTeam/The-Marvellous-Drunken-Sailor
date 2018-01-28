@@ -4,12 +4,6 @@ const FIRE_DURATION = 100
 const MUZZLE_DURATION = 30
 const RECOIL_DURATION = 70
 
-const applyTransform = (o, m) => {
-  if (o.geometry) o.geometry.applyMatrix(m)
-
-  for (let i = o.children.length; i--; ) applyTransform(o.children[i], m)
-}
-
 export const applyAnimation = (shipsContainer, animation) => {
   animation.k++
 
@@ -19,17 +13,14 @@ export const applyAnimation = (shipsContainer, animation) => {
 
   const model = models['effect_muzzle']
 
-  const a = -0.9
-
   if (!muzzle && model) {
     muzzle = model.clone()
     muzzle.name = 'effect_muzzle'
 
     ship.children[0].add(muzzle)
 
-    muzzle.rotation.x = -0.9
-
     // for destroyer
+    muzzle.rotation.x = -0.9
     muzzle.position.z = 0.4
     muzzle.position.x = 0.115
     muzzle.position.y = -0.17

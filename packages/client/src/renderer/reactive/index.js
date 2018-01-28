@@ -14,15 +14,28 @@ const getShipId = o =>
 
 export const init = (scene, { camera }, { onSelectShip }) => {
   let anchorClient = null
-  let anchorCamera = null
+  let startDate = null
 
   const raycaster = new THREE.Raycaster()
   const mouse = new THREE.Vector2()
-
   const cell = { x: 0, y: 0 }
 
   const down = e => {
+    startDate = Date.now()
+    anchorClient = getPointer(e)
+  }
+
+  const up = e => {
+    if (Date.now() > startDate + 70) return
+
     const pointer = getPointer(e)
+
+    const delta = {
+      x: pointer.x - anchorClient.x,
+      y: pointer.y - anchorClient.y,
+    }
+
+    if (Math.abs(delta.x) + Math.abs(delta.y) > 16) return
 
     mouse.x = pointer.x / window.innerWidth * 2 - 1
     mouse.y = -(pointer.y / window.innerHeight) * 2 + 1
@@ -45,17 +58,14 @@ export const init = (scene, { camera }, { onSelectShip }) => {
     )
 
     onSelectShip((ship && ship.id) || null)
-
-    e.preventDefault()
-    e.stopPropagation()
-    e.stopImmediatePropagation()
   }
 
   const main = document.getElementById('mainScene')
 
-  main.addEventListener('click', down)
-  // main.addEventListener('touchstart', down)
-  // main.addEventListener('mousedown', down)
+  main.addEventListener('touchstart', down)
+  main.addEventListener('mousedown', down)
+  main.addEventListener('touchend', up)
+  main.addEventListener('mouseup', up)
 }
 
 export const onStateChanged = (_, s) => (gameState = s)

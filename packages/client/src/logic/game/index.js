@@ -70,7 +70,6 @@ export const canMove = (state, shipId) => {
 
 export const getPossibleFireTarget = (state, shipId) => {
   //TODO add island
-  const blocked = [...state.ships.filter(ship => ship.playerId == state.me.id).map(s => s.position)]
   const ship = state.ships.find(x => x.id === shipId)
 
   const spec = SHIP_SPEC[ship.blueprint]
@@ -80,8 +79,12 @@ export const getPossibleFireTarget = (state, shipId) => {
     for ( let k = 0; k < moves.length; k++) {
         for ( let p = 1; p <= spec.max_range; p++) {
           const test = {x: ship.position.x + moves[k].vx * p, y: ship.position.y + moves[k].vy * p}
-          if ( blocked.find(p => p.x == test.x && p.y == test.y) )
+          const testShip = state.ships.find(s => s.position.x == test.x && s.position.y == test.y)
+          if ( testShip ){
+            if ( testShip.playerId != state.me.id )
+              ok.push(test)
             break
+          }
           if ( p >= spec.min_range)
             ok.push(test)
         }
@@ -91,10 +94,9 @@ export const getPossibleFireTarget = (state, shipId) => {
       for( let ny = -spec.max_range; ny <= spec.max_range; ny++) {
         const test = {x: ship.position.x + nx, y: ship.position.y + ny}
         const dist = Math.abs(test.x - ship.position.x) + Math.abs(test.y - ship.position.y)
-        if ( !blocked.find(p => p.x == test.x && p.y == test.y) &&
-             dist >= spec.min_range && dist <= spec.max_range ) {
-          ok.push(test)
-        }
+        const testShip = state.ships.find(s => s.position.x == test.x && s.position.y == test.y)
+        if ( (!testShip || testShip.playerId != state.me.id) && dist >= spec.min_range && dist <= spec.max_range )
+            ok.push(test)
       }
     }
   } else if ( ship.blueprint == 'scout' ) {
@@ -103,8 +105,8 @@ export const getPossibleFireTarget = (state, shipId) => {
         for( let ny = -spec.max_range; ny <= spec.max_range; ny++) {
           const test = {x: ship.position.x + nx, y: ship.position.y + ny}
           const dist = Math.abs(test.x - ship.position.x) + Math.abs(test.y - ship.position.y)
-          if ( !blocked.find(p => p.x == test.x && p.y == test.y) &&
-               dist >= spec.min_range && dist <= spec.max_range ) {
+          const testShip = state.ships.find(s => s.position.x == test.x && s.position.y == test.y)
+          if ( (!testShip || testShip.playerId != state.me.id ) && dist >= spec.min_range && dist <= spec.max_range ) {
             ok.push(test)
           }
         }

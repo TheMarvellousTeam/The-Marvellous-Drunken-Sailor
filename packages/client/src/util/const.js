@@ -1,5 +1,5 @@
 export const SRV_AD =
-//  'https://the-marvelous-pirate-warship-server.now.sh' ||
+  'https://the-marvelous-pirate-warship-server.now.sh' ||
   'http://localhost:8088'
 
 export const SHIP_SPEC = {

@@ -17,4 +17,7 @@ const Container = styled.div`
   position: fixed;
   left: 0;
   top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `

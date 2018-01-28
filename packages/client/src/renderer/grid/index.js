@@ -39,7 +39,7 @@ export const init = scene => {
   })
 
   const mesh = new THREE.Mesh(geo, mat)
-  mesh.name = 'ground'
+  mesh.name = 'grid'
   scene.add(mesh)
 
   mesh.position.x = 0.5

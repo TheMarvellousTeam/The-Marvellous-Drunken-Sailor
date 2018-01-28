@@ -5,6 +5,8 @@ const getPointer = e => ({
   y: (e.touches ? e.touches[0] : e).clientY,
 })
 
+let state = null
+
 export const init = (_, { camera }) => {
   let anchorClient = null
   let anchorCamera = null
@@ -38,6 +40,15 @@ export const init = (_, { camera }) => {
     camera._targetLookAt = camera._targetLookAt || {}
     camera._targetLookAt.x = camera.position.x
     camera._targetLookAt.y = camera.position.y + 4
+
+    // switch (state.players.findIndex(x => x.id == state.me.id)) {
+    //   case -1:
+    //     camera._targetLookAt.x = camera.position.x + 4
+    //   case 0:
+    //     camera._targetLookAt.y = camera.position.y + 4
+    //   case 1:
+    //     camera._targetLookAt.y = camera.position.y - 4
+    // }
 
     e.preventDefault()
     e.stopPropagation()
@@ -79,6 +90,9 @@ export const onFrame = (_1, _2, _3, _4, { camera }) => {
   )
 
   camera.lookAt(camera._lookingAt)
+  // camera.up = new THREE.Vector3(0, 0, 1)
 
   camera.updateProjectionMatrix()
 }
+
+export const onStateChanged = (_, s) => (state = s)

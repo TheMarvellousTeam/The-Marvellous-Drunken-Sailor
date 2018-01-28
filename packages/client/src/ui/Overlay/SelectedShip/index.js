@@ -17,7 +17,7 @@ export const SelectedShip = ({
       <Portrait ship={ship} />
 
       <Info>
-        <span style={{ fontWeigth: 'bold' }}>{ship.blueprint} </span>
+        <span style={{ fontWeight: 'bold' }}>{ship.blueprint} </span>
         <span>{`${ship.pa}pa ${ship.health}pv`}</span>
       </Info>
 

@@ -5,8 +5,6 @@ import { create as createUi } from './ui'
 const x = createLogic()
 
 x.onStateChanged = state => {
-  console.log('state has changed!', state)
-
   ui.onStateChanged(state)
   renderer.onStateChanged(state)
 }

@@ -70,3 +70,36 @@ loadModels(models).then(() => {
   onLoad.forEach(x => x())
   onLoad.length = 0
 })
+
+const updateMaterial = color => m => {
+  if (m.name === 'paint' || m.name === 'paint_NONE') {
+    // return new THREE.MeshPhongMaterial({
+    //   color: new THREE.Color(color),
+    // })
+
+    const m2 = m.clone()
+    m2.color = new THREE.Color(color)
+    m2.needsUpdate = true
+
+    return m2
+  }
+  return m
+}
+
+export const setColor = (model, color) => {
+  const u = updateMaterial(color)
+
+  if (model.material) {
+    if (Array.isArray(model.material)) model.material = model.material.map(u)
+    else model.material = u(model.material)
+  }
+
+  if (model.materials)
+    model.materials = model.materials.map(updateMaterial(color))
+
+  if (model.children)
+    for (let i = model.children.length; i--; )
+      setColor(model.children[i], color)
+
+  return model
+}

@@ -1,6 +1,7 @@
 import { h, Component } from 'preact'
 import styled from 'preact-emotion'
-import { models } from '../../../../renderer/_models'
+import { models, setColor } from '../../../../renderer/_models'
+import { getPlayerColor } from '~/util/color'
 import * as THREE from 'three'
 
 const width = 120
@@ -21,11 +22,19 @@ export class Portrait extends Component {
   componentDidMount() {
     const scene = new THREE.Scene()
 
-    const model = models['ship_destroyer']
+    let model
+
+    if (this.props.ship.blueprint === 'destroyer')
+      model = models['ship_destroyer']
+    if (this.props.ship.blueprint === 'heavy') model = models['ship_heavy']
+    if (this.props.ship.blueprint === 'scout') model = models['ship_light']
 
     if (!model) return
 
-    const shipObject = model.clone()
+    const shipObject = setColor(
+      model.clone(),
+      getPlayerColor(this.props.ship.playerId)
+    )
 
     scene.add(shipObject)
 

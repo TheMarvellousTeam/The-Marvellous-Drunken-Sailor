@@ -17,7 +17,13 @@ const createShip = ({ id, position, orientation, blueprint }) => {
   container.rotation.z = toAngle(orientation || { x: 0, y: 0 })
   container.roll_theta = Math.random() * Math.PI
 
-  const mesh = models['ship_destroyer']
+  let mesh = null
+  if (blueprint === 'destroyer' )
+    mesh = models['ship_destroyer']
+  if (blueprint === 'heavy' )
+      mesh = models['ship_heavy']
+  if (blueprint === 'scout' )
+      mesh = models['ship_light']
 
   if (!mesh) {
     const placeholder = new THREE.Object3D()

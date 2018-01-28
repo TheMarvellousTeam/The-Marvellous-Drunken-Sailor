@@ -8,6 +8,7 @@ const randomRoomName = () =>
 
 export const Lobby = ({ roomId, started, connecting }) => (
   <Container>
+    <div style="background-image:url('./logo/logo.png');position:fixed;top:0;left:0;bottom:0;right:0"></div>
     {connecting && <span>{`connecting to ${roomId}`}</span>}
 
     {!connecting &&

@@ -49,6 +49,7 @@ const loadModels = models => {
 
         forTransform.scale.set(0.014, 0.014, 0.014)
         forTransform.rotation.x = Math.PI / 2
+        forTransform.position.z = 0.1
         forTransform.updateMatrix()
 
         applyTransform(obj, forTransform.matrix)

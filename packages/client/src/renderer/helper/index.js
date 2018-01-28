@@ -39,7 +39,7 @@ export const onStateChanged = (scene, gameState) => {
   let mat = tool === 'moveShip' ? matMove : matFire 
 
   if (shipId && tool === 'moveShip')
-    toEnhance = getPossibleFireTarget(gameState, shipId)
+    toEnhance = getPossibleMove(gameState, shipId).map(p => p.target)
 
   if (shipId && tool === 'fireShip')
     toEnhance = getPossibleFireTarget(gameState, shipId)

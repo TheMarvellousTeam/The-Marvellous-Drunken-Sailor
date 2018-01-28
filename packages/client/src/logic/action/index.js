@@ -5,7 +5,7 @@ export const applyAction = (state, action) => {
     case 'fireShip': {
       const ship = state.ships.find(x => x.id == action.shipId)
 
-      ship.pa--
+      ship.pa -= SHIP_SPEC[ship.blueprint].fire_cost
 
       const shipAtTarget = state.ships.find(
         s => s.position.x == action.target.x && s.position.y == action.target.y
@@ -45,7 +45,6 @@ export const applyAction = (state, action) => {
 
       // reset pa / pm
       state.ships.forEach(ship => {
-        ship.pm = SHIP_SPEC[ship.blueprint].pm
         ship.pa = SHIP_SPEC[ship.blueprint].pa
       })
 

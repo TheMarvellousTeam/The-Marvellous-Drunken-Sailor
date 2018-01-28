@@ -3,6 +3,13 @@ export const placeholderState = {
 
   lobby: [],
 
+  paAvailable: {
+    12: 3,
+    13: 3,
+    10: 3,
+    14: 3,
+  },
+
   blueprint: {
     dreadnougth: {
       param: {
@@ -17,7 +24,7 @@ export const placeholderState = {
   selectedTool: 'moveShip',
 
   actions: [
-    {
+/*    {
       id: 1,
       type: 'moveShip',
       shipId: 12,
@@ -62,7 +69,7 @@ export const placeholderState = {
       type: 'fireShip',
       shipId: 13,
       target: { x: 5, y: 2 },
-    },
+    },*/
   ],
 
   ships: [
@@ -89,7 +96,7 @@ export const placeholderState = {
     },
     {
       id: 14,
-      position: { x: 2, y: 0 },
+      position: { x: 0, y: 0 },
       orientation: { x: 1, y: 0 },
       health: 12,
       blueprint: 'dreadnougth',

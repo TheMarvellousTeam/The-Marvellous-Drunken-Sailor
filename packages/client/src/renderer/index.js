@@ -1,6 +1,7 @@
 import { create as createScene } from './scene'
 
 const handler = [
+  require('./sea'),
   require('./grid'),
   require('./ship'),
   require('./light'),

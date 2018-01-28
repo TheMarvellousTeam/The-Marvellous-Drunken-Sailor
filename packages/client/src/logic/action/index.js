@@ -50,6 +50,7 @@ export const applyAction = (state, action) => {
 
       // reset ui
       state.selectedTool = null
+      state.selectedShipId = null
 
       break
     }

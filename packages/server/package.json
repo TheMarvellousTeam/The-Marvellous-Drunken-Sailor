@@ -1,5 +1,5 @@
 {
-  "name": "the-marvelous-pirate-warship",
+  "name": "the-marvelous-pirate-warship-server",
   "version": "0.1.0",
   "engines": {
     "node": "8.9"
@@ -23,6 +23,10 @@
   "scripts": {
     "start": "node -e \"require('./lib').create()\"",
     "start:dev": "nodemon start.js",
-    "build": "rm -rf lib && NODE_ENV=production babel --out-dir ./lib --ignore __tests__ ./src"
+    "build":
+      "rm -rf lib && NODE_ENV=production babel --out-dir ./lib --ignore __tests__ ./src",
+    "deploy:alias":
+      "now alias `now ls the-marvelous-pirate-warship-server | grep -m 1 -e the-marvelous-pirate-warship-server- | cut -f 2 -d ' ' ` the-marvelous-pirate-warship-server",
+    "deploy": "now -e PORT=80 --public && npm run deploy:alias"
   }
 }

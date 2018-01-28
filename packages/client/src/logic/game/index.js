@@ -23,6 +23,7 @@ export const getPossibleMove = (state, shipId) => {
 					newTodo.push(test)
 					ok.push(test)
 					from[`${test.x},${test.y}`] = current
+					bloked.push(test)
 				}
 			}
 			bloked.push(current)

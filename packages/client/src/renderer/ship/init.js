@@ -1,60 +1,6 @@
 import * as THREE from 'three'
-import '../../../vendor/MTLLoader'
-import '../../../vendor/OBJLoader'
 import { toAngle } from '~/util/orientation'
-
-const applyTransform = (o, m) => {
-  if (o.geometry) o.geometry.applyMatrix(m)
-
-  for (let i = o.children.length; i--; ) applyTransform(o.children[i], m)
-}
-
-const loadModels = () => {
-  const models = {}
-
-  return Promise.all(
-    ['ship_heavy', 'ship_light', 'ship_destroyer'].map(name =>
-      new Promise((resolve, reject) => {
-        const mtlLoader = new THREE.MTLLoader()
-        mtlLoader.setPath('obj/')
-
-        mtlLoader.load(
-          `${name}.mtl`,
-          materials => {
-            materials.preload()
-
-            const objLoader = new THREE.OBJLoader()
-            objLoader.setMaterials(materials)
-            objLoader.setPath('obj/')
-            objLoader.load(`${name}.obj`, resolve, null, reject)
-          },
-          null,
-          reject
-        )
-      }).then(obj => {
-        const forTransform = new THREE.Object3D()
-
-        forTransform.scale.set(0.02, 0.02, 0.02)
-        forTransform.rotation.x = Math.PI / 2
-        forTransform.updateMatrix()
-
-        applyTransform(obj, forTransform.matrix)
-
-        models[name] = obj
-      })
-    )
-  ).then(() => models)
-}
-
-let models = {}
-
-const onLoad = []
-
-loadModels().then(o => {
-  models = o
-  onLoad.forEach(x => x())
-  onLoad.length = 0
-})
+import { onModelLoaded, models } from '../_models'
 
 export const init = scene => {
   const container = new THREE.Object3D()
@@ -71,7 +17,7 @@ const createShip = ({ id, position, orientation, blueprint }) => {
   container.rotation.z = toAngle(orientation)
   container.roll_theta = Math.random() * Math.PI
 
-  const mesh = models['ship_light']
+  const mesh = models['ship_destroyer']
 
   if (!mesh) {
     const placeholder = new THREE.Object3D()
@@ -79,8 +25,8 @@ const createShip = ({ id, position, orientation, blueprint }) => {
 
     container.add(placeholder)
 
-    onLoad.push(() => {
-      const mesh = models['ship_light'].clone()
+    onModelLoaded(() => {
+      const mesh = models['ship_destroyer'].clone()
 
       container.remove(container.children[0])
       container.add(mesh)

@@ -6,8 +6,6 @@ export const create = () => {
   let state = {
     ...placeholderState,
     lobby: [],
-    actionToPull : -1,
-    actionToRender: [],
   }
 
   const onLoadList = async () => {
@@ -24,9 +22,11 @@ export const create = () => {
     })
 
     state.roomId = res.room_id
-    state.myTeam = res.playerTeam
+    state.myTeam = res.player_team
     state.myTurn = true
-    state.world = res.world
+    //state.ships = res.world.ships[state.myTeam]
+    state.enemyShips = res.world.ships[state.myTeam ? 0 : 1]
+    state.island = res.world.island
 
     out.onStateChanged(state)
   }
@@ -50,9 +50,11 @@ export const create = () => {
     })
 
     state.roomId = res.room_id
-    state.myTeam = res.playerTeam
+    state.myTeam = res.player_team
     state.myTurn = false
-    state.world = res.world
+    //state.ships = res.world.ships[state.myTeam]
+    state.enemyShips = res.world.ships[state.myTeam ? 0 : 1]
+    state.island = res.world.island
 
     out.onStateChanged(state)
 

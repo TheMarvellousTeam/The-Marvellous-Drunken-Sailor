@@ -1,4 +1,4 @@
-# Blender MTL File: 'pouet2.blend'
+# Blender MTL File: 'pouet3.blend'
 # Material Count: 5
 
 newmtl None
@@ -10,10 +10,10 @@ d 1
 illum 2
 
 newmtl bare_metal
-Ns 133.333333
+Ns 76.470588
 Ka 1.000000 1.000000 1.000000
 Kd 0.105003 0.106457 0.130113
-Ks 0.738710 0.738710 0.738710
+Ks 0.800000 0.800000 0.800000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000

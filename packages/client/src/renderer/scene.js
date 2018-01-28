@@ -4,7 +4,7 @@ window.THREE = THREE
 
 export const create = (config = {}) => {
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 3000)
-  camera.position.set(0, 0, 8)
+  camera.position.set(0, 0, 4)
   camera.lookAt((camera._lookingAt = new THREE.Vector3(0, 4, 0)))
   camera.updateProjectionMatrix()
 

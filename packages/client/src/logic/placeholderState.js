@@ -24,7 +24,7 @@ export const placeholderState = {
   selectedTool: 'moveShip',
 
   actions: [
-/*    {
+    {
       id: 1,
       type: 'moveShip',
       shipId: 12,
@@ -67,9 +67,27 @@ export const placeholderState = {
     {
       id: 4,
       type: 'fireShip',
+      shipId: 10,
+      target: { x: 5, y: 2 },
+    },
+    {
+      id: 5,
+      type: 'fireShip',
+      shipId: 12,
+      target: { x: 5, y: 2 },
+    },
+    {
+      id: 6,
+      type: 'fireShip',
       shipId: 13,
       target: { x: 5, y: 2 },
-    },*/
+    },
+    {
+      id: 7,
+      type: 'fireShip',
+      shipId: 14,
+      target: { x: 5, y: 2 },
+    },
   ],
 
   ships: [

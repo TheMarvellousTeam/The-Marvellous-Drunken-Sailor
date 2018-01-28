@@ -21,8 +21,8 @@ build:
       cwd: packages/client
       code: |
         mv dist gh-pages
-        mv vendor gh-pages
-        mv src/asset gh-pages
+        mv vendor/* gh-pages
+        mv src/asset/* gh-pages
 
 
 deploy-pages:

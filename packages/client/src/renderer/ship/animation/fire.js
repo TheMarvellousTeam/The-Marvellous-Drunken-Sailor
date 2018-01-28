@@ -1,10 +1,12 @@
 import { models } from '../../_models'
-
+import { play } from '~/util/sound'
 const FIRE_DURATION = 100
 const MUZZLE_DURATION = 30
 const RECOIL_DURATION = 70
 
 export const applyAnimation = (shipsContainer, animation) => {
+  if (animation.k == 0) play('sound/boom/ripping_explosion.mp3')
+
   animation.k++
 
   const ship = shipsContainer.getObjectByName(animation.action.shipId)

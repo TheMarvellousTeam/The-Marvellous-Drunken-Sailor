@@ -1,6 +1,7 @@
 export * from './init'
 import { applyAnimation as applyMoveAnimation } from './animation/move'
 import { applyAnimation as applyFireAnimation } from './animation/fire'
+import { applyAnimation as applySplashAnimation } from './animation/splash'
 
 export const onFrame = (scene, gameState, t) => {
   const shipsContainer = scene.getObjectByName('ships')
@@ -30,6 +31,10 @@ export const onFrame = (scene, gameState, t) => {
 
       case 'fireShip':
         applyFireAnimation(shipsContainer, scene.ship_animation)
+        break
+
+      case 'splash':
+        applySplashAnimation(shipsContainer, scene.ship_animation)
         break
     }
   } else {

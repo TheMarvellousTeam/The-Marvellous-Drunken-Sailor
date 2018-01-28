@@ -9,6 +9,7 @@ export const create = ctx => {
 	ctx.body = {
 		room_id: ctx.storage.nextRoomId,
 		player_team: 0,
+		current_player: ctx.storage.worlds[ctx.storage.nextRoomId].currentPlayer
 		world: world,
 	}
 	ctx.storage.nextRoomId++
@@ -20,6 +21,7 @@ export const join = ctx => {
 	ctx.body = {
 		room_id: room_id,
 		player_team: 1,
+		current_player: ctx.storage.worlds[ctx.storage.nextRoomId].currentPlayer
 		world: ctx.storage.worlds[room_id]
 	}
 }

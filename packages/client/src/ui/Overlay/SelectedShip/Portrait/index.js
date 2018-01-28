@@ -45,7 +45,7 @@ export class Portrait extends Component {
 
     const light2 = new THREE.AmbientLight(0xc9d2e0, 0.5)
     light2.name = 'ambient'
-    scene.add(ligh2)
+    scene.add(light2)
 
     this.base.children[0].appendChild(renderer.domElement)
 

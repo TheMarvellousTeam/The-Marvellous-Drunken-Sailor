@@ -1,7 +1,8 @@
 import { models } from '../../_models'
 
 const FIRE_DURATION = 100
-const MUZZLE_DURATION = 70
+const MUZZLE_DURATION = 30
+const RECOIL_DURATION = 70
 
 const applyTransform = (o, m) => {
   if (o.geometry) o.geometry.applyMatrix(m)
@@ -24,14 +25,6 @@ export const applyAnimation = (shipsContainer, animation) => {
     muzzle = model.clone()
     muzzle.name = 'effect_muzzle'
 
-    const forTransform = new THREE.Object3D()
-
-    forTransform.scale.set(0.5, 0.5, 0.5)
-    // forTransform.position.z = -0.2
-    forTransform.updateMatrix()
-
-    applyTransform(muzzle, forTransform.matrix)
-
     ship.children[0].add(muzzle)
 
     muzzle.rotation.x = -0.9
@@ -45,13 +38,18 @@ export const applyAnimation = (shipsContainer, animation) => {
   if (muzzle) {
     const x = animation.k / MUZZLE_DURATION
 
-    const s = (x < 0.3 ? x / 0.3 : Math.max(0, 1 - (x - 0.3) / 0.7)) * 6
-
-    ship.children[0].position.y = -s / 10
+    const s = (x < 0.3 ? x / 0.3 : Math.max(0, 1 - (x - 0.3) / 0.7)) * 1
 
     muzzle.scale.set(s, s, s)
-    // muzzle.position.z = Math.cos(a) * s / 2
-    // muzzle.position.x = Math.sin(a) * s / 2
+  }
+
+  // recoil
+  {
+    const x = animation.k / RECOIL_DURATION
+
+    const s = (x < 0.3 ? x / 0.3 : Math.max(0, 1 - (x - 0.3) / 0.7)) * 0.5
+
+    ship.children[0].position.y = -s
   }
 
   if (animation.k > FIRE_DURATION) {

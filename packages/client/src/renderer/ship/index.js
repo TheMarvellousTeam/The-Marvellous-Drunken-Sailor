@@ -26,9 +26,11 @@ export const onFrame = (scene, gameState, t) => {
     switch (scene.ship_animation.action.type) {
       case 'moveShip':
         applyMoveAnimation(shipsContainer, scene.ship_animation)
+        break
 
       case 'fireShip':
         applyFireAnimation(shipsContainer, scene.ship_animation)
+        break
     }
   } else {
     // is there a next animation to pick?

@@ -11,6 +11,7 @@ export const getPossibleMove = (state, shipId) => {
 
 	let from = {}
 	let todo = [start]
+	bloked.push(start)
 	let ok = []
 	let currentDepth = 0
 	while ( currentDepth < maxDepth ) {
@@ -26,7 +27,6 @@ export const getPossibleMove = (state, shipId) => {
 					bloked.push(test)
 				}
 			}
-			bloked.push(current)
 		}
 		todo = newTodo
 		currentDepth++

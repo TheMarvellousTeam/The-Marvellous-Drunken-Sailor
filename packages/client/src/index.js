@@ -10,7 +10,7 @@ x.onStateChanged = state => {
   console.log('state has changed!', state)
 
   document.getElementById('lobby').style.display =
-    state.roomId || true ? 'none' : 'block'
+    state.roomId ? 'none' : 'block'
 
   ui.onStateChanged(state)
   renderer.onStateChanged(state)

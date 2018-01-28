@@ -1,5 +1,5 @@
 import fetch from '~/util/fetch'
-import { SRV_AD } from '~/util/const'
+import { SRV_AD, SHIP_SPEC } from '~/util/const'
 import { placeholderState } from './placeholderState'
 
 export const create = () => {
@@ -24,9 +24,11 @@ export const create = () => {
     state.roomId = res.room_id
     state.myTeam = res.player_team
     state.myTurn = true
-    //state.ships = res.world.ships[state.myTeam]
+    state.ships = res.world.ships[state.myTeam]
     state.enemyShips = res.world.ships[state.myTeam ? 0 : 1]
     state.island = res.world.island
+    state.availablePa = {}
+    state.ships.forEach(ship => state.availablePa[ship.id] = SHIP_SPEC[ship.blueprint].pa )
 
     out.onStateChanged(state)
   }
@@ -36,11 +38,11 @@ export const create = () => {
       method: 'POST',
       body: {action}
     })
-
   }
 
   const onEndTurn = async () => {
     const res = await fetch(`${SRV_AD}/${state.roomId}/end_turn`)
+    state.ships.forEach(ship => state.availablePa[ship.id] = SHIP_SPEC[ship.blueprint].pa )
   }
 
   const onCreateRoom = async name => {
@@ -52,9 +54,11 @@ export const create = () => {
     state.roomId = res.room_id
     state.myTeam = res.player_team
     state.myTurn = false
-    //state.ships = res.world.ships[state.myTeam]
+    state.ships = res.world.ships[state.myTeam]
     state.enemyShips = res.world.ships[state.myTeam ? 0 : 1]
     state.island = res.world.island
+    state.availablePa = {}
+    state.ships.forEach(ship => state.availablePa[ship.id] = SHIP_SPEC[ship.blueprint].pa )
 
     out.onStateChanged(state)
 
@@ -67,8 +71,7 @@ export const create = () => {
     //TODO apply new action
 
     state.myTurn = (state.myTeam == res.world.currentPlayer)
-    state.actionToRender.push( ...res.actions.filter(e => e.id > state.actionToPull ) )
-    state.actionToPull = state.actionToRender[state.actionToRender.length-1]
+    state.actions = res.actions
 
     out.onStateChanged(state)
 

@@ -1,4 +1,5 @@
 import preact, { h, render } from 'preact'
+import { play } from '~/util/sound'
 
 preact.createElement = preact.h
 preact.PropTypes = { func: {} }
@@ -11,10 +12,17 @@ export const create = actions => {
   const overlayDOM = document.getElementById('overlay')
   const lobbyDOM = document.getElementById('lobby')
 
+  let music_started = false
+
   return {
     onStateChanged: state => {
       lobbyDOM.style.display = state.started ? 'none' : 'block'
       overlayDOM.style.display = !state.started ? 'none' : 'block'
+
+      if (state.started && !music_started) {
+        music_started = true
+        play('sound/03_Marvelous_pirate_withmix_session.ogg', { loop: true })
+      }
 
       render(
         <Overlay {...actions} {...state} state={state} />,

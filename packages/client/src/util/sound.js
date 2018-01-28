@@ -1,6 +1,13 @@
-export const play = src => {
+export const play = (src, { loop } = {}) => {
   const a = new Audio()
   a.src = src
   a.play()
-  a.onend = () => (a = null)
+  if (loop) a.loop = true
+  else a.onend = () => (a = null)
+
+  return () => {
+    a.stop()
+    a.src = null
+    a = null
+  }
 }

@@ -5,12 +5,13 @@ export const init = scene => {
 
   scene.add(container)
   container.name = 'ground'
-  container.position.z = 0
+  container.position.z = -1
 
   const canvas = document.createElement('canvas')
   canvas.width = canvas.height = 2
   const ctx = canvas.getContext('2d')
-  ctx.fillStyle = 'aliceblue'
+  ctx.fillStyle = '#00b9ee'
+  ctx.fillStyle = '#54b4d0'
   ctx.beginPath()
   ctx.rect(0, 0, 2, 2)
   ctx.fill()

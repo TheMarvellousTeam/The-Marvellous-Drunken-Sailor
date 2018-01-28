@@ -11,7 +11,7 @@ export const create = (config = {}) => {
   const scene = new THREE.Scene()
 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialiasing: true })
-  renderer.setClearColor(0x6dbd9a, 1)
+  renderer.setClearColor(0x00b9ee, 1)
   renderer.setPixelRatio(window.devicePixelRatio)
 
   window.scene = scene

@@ -19,6 +19,7 @@ export const Lobby = ({ roomId, started, connecting }) => (
 
       <br/> A<a href="https://github.com/TheMarvellousTeam/">Marvellous Team</a>production
     </div>
+    <br/><br/><br/><br/><br/>
     </div>
 
   </Container>

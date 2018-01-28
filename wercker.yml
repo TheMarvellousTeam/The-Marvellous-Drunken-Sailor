@@ -29,4 +29,4 @@ deploy-pages:
   steps:
     - takuma7/gh-pages:
         token: $GH_TOKEN
-        basedir: gh-pages
+        basedir: packages/client/gh-pages

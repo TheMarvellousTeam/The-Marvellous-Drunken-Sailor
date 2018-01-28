@@ -26,7 +26,7 @@ export const init = (scene, { camera }, { onSelectShip }) => {
   }
 
   const up = e => {
-    if (Date.now() > startDate + 70) return
+    if (Date.now() > startDate + 170) return
 
     const pointer = getPointer(e)
 

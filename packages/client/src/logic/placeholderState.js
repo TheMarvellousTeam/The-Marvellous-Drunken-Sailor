@@ -27,35 +27,14 @@ export const placeholderState = {
         { x: -2, y: 2 },
         { x: -2, y: 3 },
         { x: -1, y: 3 },
-        { x: 0, y: 3 },
-        { x: 1, y: 3 },
-        { x: 2, y: 3 },
       ],
     },
+
     {
       id: 2,
       type: 'moveShip',
       shipId: 13,
-      path: [
-        { x: 0, y: 2 },
-        { x: 0, y: 3 },
-        { x: 0, y: 4 },
-        { x: 1, y: 4 },
-        { x: 2, y: 4 },
-      ],
-    },
-    {
-      id: 3,
-      type: 'moveShip',
-      shipId: 10,
-      path: [
-        { x: 0, y: -2 },
-        { x: 0, y: -1 },
-        { x: 0, y: 0 },
-        { x: 0, y: 1 },
-        { x: 1, y: 1 },
-        { x: 2, y: 1 },
-      ],
+      path: [{ x: 0, y: 2 }, { x: 0, y: 3 }],
     },
     {
       id: 4,
@@ -64,10 +43,20 @@ export const placeholderState = {
       target: { x: 5, y: 2 },
     },
     {
+      id: 4.5,
+      type: 'splash',
+      target: { x: 0, y: 0 },
+    },
+    {
       id: 5,
       type: 'fireShip',
       shipId: 12,
       target: { x: 5, y: 2 },
+    },
+    {
+      id: 5.5,
+      type: 'splash',
+      target: { x: 0, y: 0 },
     },
     {
       id: 6,
@@ -76,10 +65,25 @@ export const placeholderState = {
       target: { x: 5, y: 2 },
     },
     {
+      id: 6.5,
+      type: 'splash',
+      target: { x: 0, y: 0 },
+    },
+    {
       id: 7,
       type: 'fireShip',
       shipId: 14,
       target: { x: 5, y: 2 },
+    },
+    {
+      id: 7.5,
+      type: 'splash',
+      target: { x: 0, y: 0 },
+    },
+    {
+      id: 8,
+      type: 'shipSunk',
+      shipId: 13,
     },
   ],
 

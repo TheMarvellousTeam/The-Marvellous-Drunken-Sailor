@@ -22,9 +22,14 @@ export const TimeLine = ({ players, currentPlayerId, me, endTurn }) => (
       </Player>
     ))}
 
-    {me.id == currentPlayerId && <button onClick={endTurn}>end my turn</button>}
+    {me.id == currentPlayerId && <Button onClick={endTurn}>end my turn</Button>}
   </Container>
 )
+
+const Button = styled.button`
+  padding: 8px;
+  margin-left: 40px;
+`
 
 const PlayerName = styled.div`
   border-radius: 4px;

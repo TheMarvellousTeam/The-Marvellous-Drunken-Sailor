@@ -38,9 +38,14 @@ export class Portrait extends Component {
 
     scene.add(shipObject)
 
-    const light = new THREE.PointLight(0xdddddd, 1, 0, 2)
-    light.position.set(5, 5, 25)
+    const light = new THREE.DirectionalLight(0xdddddd, 1)
+    light.position.set(3.58, -3.3, 2)
+    light.name = 'directional'
     scene.add(light)
+
+    const light2 = new THREE.AmbientLight(0xc9d2e0, 0.5)
+    light2.name = 'ambient'
+    scene.add(ligh2)
 
     this.base.children[0].appendChild(renderer.domElement)
 

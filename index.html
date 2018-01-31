@@ -1,0 +1,26 @@
+<html style="overflow: hidden;">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+  body{
+    font-family: helvetica;
+  }
+  </style>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body style="margin:0;background-color:#eee;overflow:hidden">
+
+  <!-- preload sound -->
+  <audio src="sound/intro.ogg" type="audio/ogg" autoplay style="display:none" ></audio>
+  <audio src="sound/boom/ripping_explosion.mp3" style="display:none" ></audio>
+  <audio src="sound/vaguemouvement.ogg" style="display:none" ></audio>
+  <audio src="sound/03_Marvelous_pirate_withmix_session.ogg" style="display:none" ></audio>
+
+  <div id="overlay" style="z-index:2;position:relative;overflow:hidden;display:none"></div>
+  <div id="mainScene" style="position:fixed;top:0;left:0;bottom:0;right:0;display:none"></div>
+  <div id="lobby" style="position:relative"></div>
+  <script src="app.js"></script>
+</body>
+</html>
